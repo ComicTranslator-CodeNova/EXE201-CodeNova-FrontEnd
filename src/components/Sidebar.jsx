@@ -24,9 +24,6 @@ export default function Sidebar() {
         <NavLink to="/menu" className={linkClasses}>
           Home
         </NavLink>
-        <NavLink to="/history" className={linkClasses}>
-          History
-        </NavLink>
         <NavLink to="/tokens" className={linkClasses}>
           Tokens
         </NavLink>

@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Menu from "./pages/Menu";
 import Tokens from "./pages/Tokens";
 import Payment from "./pages/Payment";
+import Setting from "./pages/Settings";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/menu" element={<Menu />} />
       <Route path="/tokens" element={<Tokens />} />
       <Route path="/payment" element={<Payment />} />
+      <Route path="/settings" element={<Setting />} />
     </Routes>
   );
 }

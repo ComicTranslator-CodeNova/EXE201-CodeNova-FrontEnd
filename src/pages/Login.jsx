@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <div className="flex min-h-screen">
       {/* Left panel */}
-      <div className="flex flex-col justify-center bg-black text-white w-1/2 p-16">
+      {/* <div className="flex flex-col justify-center bg-black text-white w-1/2 p-16">
         <h1 className="text-2xl font-bold mb-6">ComicTranslator</h1>
         <h2 className="text-4xl font-bold mb-4">
           Translate Comics Instantly in Your Language
@@ -51,6 +51,33 @@ export default function Login() {
           No downloads. No hassle. ComicTranslator brings every panel to life
           in your tongue.
         </p>
+      </div> */}
+
+      <div className="relative flex flex-col justify-center text-white w-1/2 p-16 overflow-hidden">
+        {/* Video background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+        >
+          <source src="/videos/background_login.mp4" type="video/mp4" />
+          {/* fallback nếu browser không support */}
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Overlay nội dung */}
+        <div className="relative z-10">
+          <h1 className="text-2xl font-bold mb-6">ComicTranslator</h1>
+          <h2 className="text-4xl font-bold mb-4">
+            Translate Comics Instantly in Your Language
+          </h2>
+          <p className="text-gray-300">
+            No downloads. No hassle. ComicTranslator brings every panel to life
+            in your tongue.
+          </p>
+        </div>
       </div>
 
       {/* Right panel */}

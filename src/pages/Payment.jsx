@@ -24,8 +24,24 @@ export default function Payment() {
       <Sidebar />
 
       {/* Main */}
-      <main className="flex-1 flex justify-center items-center bg-gradient-to-br from-blue-50 to-blue-200 p-8">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+      <main className="relative flex-1 flex justify-center items-center overflow-hidden">
+        {/* Video background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        >
+          <source src="/videos/background_payment.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Overlay gradient để chữ vẫn rõ */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 to-blue-200/70"></div>
+
+        {/* Payment content */}
+        <div className="relative z-10 w-full max-w-md bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
           {/* Header */}
           <h1 className="text-xl font-bold text-center mb-2 uppercase text-gray-800">
             Select Payment Method
@@ -65,9 +81,7 @@ export default function Payment() {
                 checked={method === "momo"}
                 onChange={() => setMethod("momo")}
               />
-              <span className="font-medium flex items-center gap-2">
-                🏦 MoMo
-              </span>
+              <span className="font-medium flex items-center gap-2">🏦 MoMo</span>
             </label>
             <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-blue-500 transition">
               <input
@@ -77,13 +91,11 @@ export default function Payment() {
                 checked={method === "paypal"}
                 onChange={() => setMethod("paypal")}
               />
-              <span className="font-medium flex items-center gap-2">
-                🅿️ PayPal
-              </span>
+              <span className="font-medium flex items-center gap-2">🅿️ PayPal</span>
             </label>
           </div>
 
-          {/* Card Form (nếu chọn card) */}
+          {/* Card Form */}
           {method === "card" && (
             <div className="space-y-3 mb-6">
               <input
@@ -123,6 +135,8 @@ export default function Payment() {
           </p>
         </div>
       </main>
+
+
     </div>
   );
 }

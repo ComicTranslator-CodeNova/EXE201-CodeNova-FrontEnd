@@ -5,26 +5,41 @@ export default function Home() {
   return (
     <div className="w-full">
       <Header />  {/* 👈 Thêm header */}
-      {/* Hero */}
       <section
         id="hero"
-        className="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center pt-24"
+        className="relative text-white min-h-screen flex flex-col items-center justify-center pt-24 overflow-hidden"
       >
-        <h1 className="text-4xl md:text-6xl font-extrabold text-center">
-          TRANSLATE COMICS INSTANTLY IN YOUR LANGUAGE
-        </h1>
-        <p className="text-center mt-4 text-lg max-w-2xl">
-          No downloads. No hassle. ComicTranslator brings every panel to life in your tongue.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
-            Translating magic...
-          </button>
-          <button className="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-black">
-            ▶ Watch Demo
-          </button>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        >
+          <source src="/videos/background_hero.mp4" type="video/mp4" />
+        </video>
+
+        <div className="absolute inset-0 bg-black/60" />
+
+        <div className="relative z-10 flex flex-col items-center justify-center text-center">
+          <h1 className="text-4xl md:text-6xl font-extrabold">
+            TRANSLATE COMICS INSTANTLY IN YOUR LANGUAGE
+          </h1>
+          <p className="mt-4 text-lg max-w-2xl">
+            No downloads. No hassle. ComicTranslator brings every panel to life in your tongue.
+          </p>
+          <div className="mt-8 flex gap-4">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
+              Translating magic...
+            </button>
+            <button className="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-black">
+              ▶ Watch Demo
+            </button>
+          </div>
         </div>
       </section>
+
+
 
       {/* --- How It Works Section --- */}
       <section id="how" className="py-16 bg-white text-center">

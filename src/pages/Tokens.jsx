@@ -23,73 +23,97 @@ export default function Tokens() {
 
   return (
     <div className="flex min-h-screen bg-blue-600">
+      {/* Sidebar */}
       <Sidebar />
 
-      <main className="flex-1 bg-white p-8 rounded-tl-3xl">
-        {/* Header user info */}
-        <div className="flex justify-between items-center mb-10">
-          <div>
-            <h2 className="text-2xl font-bold uppercase text-gray-900">TOKENS</h2>
-            <p className="text-gray-500">
-              Purchase Tokens — Select a package to continue...
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="font-semibold">{user?.display_name || "Anonymous"}</p>
-            <p className="text-gray-500 text-sm">{user?.email || ""}</p>
-          </div>
-        </div>
+      {/* Main Content */}
+      <main className="relative flex-1 overflow-hidden p-8">
+        {/* Background video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        >
+          <source src="/videos/background_menu.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
-        {/* Token packages */}
-        <div className="flex gap-6 items-end justify-center mb-8">
-          {tokenPackages.map((pkg, idx) => (
-            <div
-              key={idx}
-              onClick={() => setSelected(pkg)}
-              className={`flex flex-col justify-between border rounded-2xl shadow transition w-48 p-4 cursor-pointer
-                ${pkg.height}
-                ${selected?.amount === pkg.amount
-                  ? "bg-blue-100 border-blue-600 shadow-lg"
-                  : "bg-white border-gray-200 hover:shadow-md"}
-              `}
-            >
-              <div>
-                <h3 className="text-xl font-bold mb-1">{pkg.amount} Tokens</h3>
-                <p className="text-lg font-semibold text-blue-600 mb-1">
-                  ${pkg.price.toFixed(2)}
-                </p>
-                <p className="text-xs text-gray-500">{pkg.desc}</p>
-              </div>
-              <button
-                className={`mt-4 py-1.5 rounded-full transition
-                  ${selected?.amount === pkg.amount
-                    ? "bg-blue-700 text-white"
-                    : "bg-blue-600 text-white hover:bg-blue-700"}
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/70 to-blue-100/60"></div>
+
+        {/* Actual content */}
+        <div className="relative z-10">
+          {/* Header user info */}
+          <div className="flex justify-between items-center mb-10">
+            <div>
+              <h2 className="text-2xl font-bold uppercase text-gray-900">TOKENS</h2>
+              <p className="text-gray-500">
+                Purchase Tokens — Select a package to continue...
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="font-semibold">{user?.display_name || "Anonymous"}</p>
+              <p className="text-gray-500 text-sm">{user?.email || ""}</p>
+            </div>
+          </div>
+
+          {/* Token packages */}
+          <div className="flex gap-6 items-end justify-center mb-8">
+            {tokenPackages.map((pkg, idx) => (
+              <div
+                key={idx}
+                onClick={() => setSelected(pkg)}
+                className={`flex flex-col justify-between border rounded-2xl shadow transition w-48 p-4 cursor-pointer
+                  ${pkg.height}
+                  ${
+                    selected?.amount === pkg.amount
+                      ? "bg-blue-100/90 border-blue-600 shadow-lg"
+                      : "bg-white/90 backdrop-blur-sm border-gray-200 hover:shadow-md"
+                  }
                 `}
               >
-                {selected?.amount === pkg.amount ? "Selected" : "Buy Now"}
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* Continue payment */}
-        {selected && (
-          <div className="text-center mt-6">
-            <button
-              onClick={handleContinue}
-              className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800"
-            >
-              Continue to Payment
-            </button>
-            <div
-              onClick={() => setSelected(null)}
-              className="text-blue-500 text-sm mt-2 cursor-pointer hover:underline"
-            >
-              Cancel
-            </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-1">{pkg.amount} Tokens</h3>
+                  <p className="text-lg font-semibold text-blue-600 mb-1">
+                    ${pkg.price.toFixed(2)}
+                  </p>
+                  <p className="text-xs text-gray-500">{pkg.desc}</p>
+                </div>
+                <button
+                  className={`mt-4 py-1.5 rounded-full transition
+                    ${
+                      selected?.amount === pkg.amount
+                        ? "bg-blue-700 text-white"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    }
+                  `}
+                >
+                  {selected?.amount === pkg.amount ? "Selected" : "Buy Now"}
+                </button>
+              </div>
+            ))}
           </div>
-        )}
+
+          {/* Continue payment */}
+          {selected && (
+            <div className="text-center mt-6">
+              <button
+                onClick={handleContinue}
+                className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800"
+              >
+                Continue to Payment
+              </button>
+              <div
+                onClick={() => setSelected(null)}
+                className="text-blue-500 text-sm mt-2 cursor-pointer hover:underline"
+              >
+                Cancel
+              </div>
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
