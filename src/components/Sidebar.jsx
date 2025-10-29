@@ -8,19 +8,19 @@ export default function Sidebar() {
 
   const linkClasses = ({ isActive }) =>
     `flex items-center gap-2 px-3 py-2 rounded transition-colors
-     ${isActive ? "bg-blue-500 text-white font-semibold" : "hover:bg-blue-800"}`;
+     ${isActive ? "bg-blue-500 text-black font-semibold" : "hover:bg-red-200 text-white"}`;
 
   return (
     <aside className="w-64 bg-blue-700 text-white flex flex-col p-6">
       <h1
-        className="text-2xl font-bold mb-8 cursor-pointer"
+        className="text-2xl font-bold mb-8 cursor-pointer text-white"
         onClick={() => navigate("/menu")}
       >
         ComicTranslator
       </h1>
 
       {/* Menu links */}
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-2 text-black">
         <NavLink to="/menu" className={linkClasses}>
           Home
         </NavLink>
@@ -29,9 +29,6 @@ export default function Sidebar() {
         </NavLink>
         <NavLink to="/settings" className={linkClasses}>
           Settings
-        </NavLink>
-        <NavLink to="/billing" className={linkClasses}>
-          Billing
         </NavLink>
       </nav>
 

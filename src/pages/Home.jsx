@@ -1,7 +1,10 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
+import codenova2 from "../assets/codenova2.mp4";
+import { useState } from "react";
 
 export default function Home() {
+     const [showVideo, setShowVideo] = useState(false);
   return (
     <div className="w-full">
       <Header />  {/* 👈 Thêm header */}
@@ -32,9 +35,33 @@ export default function Home() {
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
               Translating magic...
             </button>
-            <button className="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-black">
-              ▶ Watch Demo
+             {/* Nút Watch Demo */}
+      <button 
+        onClick={() => setShowVideo(true)}
+        className="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-black"
+      >
+        ▶ Watch Demo
+      </button>
+
+      {/* Video Popup */}
+      {showVideo && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+          onClick={() => setShowVideo(false)}
+        >
+          <div className="relative max-w-4xl w-full mx-4">
+            <button
+              onClick={() => setShowVideo(false)}
+              className="absolute -top-12 right-0 text-white text-4xl"
+            >
+              ✕
             </button>
+            <video className="w-full rounded" controls autoPlay>
+              <source src={codenova2} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      )}
           </div>
         </div>
       </section>
@@ -226,7 +253,7 @@ export default function Home() {
 
 {/* --- Testimonials Section --- */}
 <section id="testimonials" className="py-20 bg-white text-center">
-  <h2 className="text-3xl font-bold mb-4">WHAT OUR READERS SAY</h2>
+  <h2 className="text-3xl font-bold mb-4 text-black">WHAT OUR READERS SAY</h2>
   <p className="max-w-2xl mx-auto mb-12 text-gray-600">
     Join thousands of satisfied users who are enjoying comics and manga in their own language.
   </p>
@@ -293,6 +320,27 @@ export default function Home() {
       <p className="text-gray-700 mb-4 text-sm">
         Love the simplicity! Just upload or open my manga and boom — I can read
         everything in my language instantly. Totally worth it.
+      </p>
+      <div className="flex justify-center">
+        <span className="text-yellow-400 text-xl">★ ★ ★ ★ ★</span>
+      </div>
+    </div>
+
+     <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
+      <div className="flex items-center gap-4 mb-4">
+        <img
+          src="https://i.pravatar.cc/60?img=1"
+          alt="user"
+          className="w-12 h-12 rounded-full"
+        />
+        <div className="text-left">
+          <h3 className="font-bold">Adam Hakimi</h3>
+          <p className="text-sm text-gray-500">Manga Writer</p>
+        </div>
+      </div>
+      <p className="text-gray-700 mb-4 text-sm">
+        ComicTranslator has completely changed how I write manga! I can now enjoy
+        titles that haven’t been officially translated yet and write in different languages.
       </p>
       <div className="flex justify-center">
         <span className="text-yellow-400 text-xl">★ ★ ★ ★ ★</span>

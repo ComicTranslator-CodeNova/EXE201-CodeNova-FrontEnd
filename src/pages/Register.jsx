@@ -83,7 +83,7 @@ export default function Register() {
           </button>
         </form>
 
-        <div className="flex items-center my-6">
+        {/* <div className="flex items-center my-6">
           <div className="flex-grow h-px bg-gray-300"></div>
           <span className="mx-3 text-gray-500 text-sm">or continue with</span>
           <div className="flex-grow h-px bg-gray-300"></div>
@@ -111,7 +111,7 @@ export default function Register() {
               className="w-6 h-6"
             />
           </button>
-        </div>
+        </div> */}
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
