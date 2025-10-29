@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import codenova from "../assets/codenova.png";
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -30,9 +31,13 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-black text-white">
       {/* Logo */}
-      <Link to="/" className="text-2xl font-bold tracking-wide">
-        ComicTranslator
-      </Link>
+      <Link to="/">
+        <img 
+          src={codenova} 
+          alt="ComicTranslator" 
+          className="h-20 w-30"
+        />
+</Link>
 
       {/* Menu */}
       <nav className="flex gap-4">
@@ -61,6 +66,13 @@ export default function Header() {
           FAQ
         </button>
 
+         <button
+          onClick={() => scrollToSection("testimonials")}
+          className="hover:text-blue-400 transition"
+        >
+          Reviews
+        </button>
+
         {/* ✅ Nút Menu */}
         <button
           onClick={handleMenuClick}
@@ -86,7 +98,7 @@ export default function Header() {
           <>
             <Link
               to="/login"
-              className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600"
+              className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 text-white"
             >
               Login
             </Link>

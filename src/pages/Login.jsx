@@ -125,12 +125,12 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="text-center text-gray-400 mb-4">or continue with</p>
+          {/* <p className="text-center text-gray-400 mb-4">or continue with</p>
           <div className="flex justify-center gap-4 mb-6">
             <button className="border p-2 rounded-full w-10 h-10">G</button>
             <button className="border p-2 rounded-full w-10 h-10">f</button>
             <button className="border p-2 rounded-full w-10 h-10">GH</button>
-          </div>
+          </div> */}
 
           <p className="text-center text-sm">
             Don’t have an account?{" "}
