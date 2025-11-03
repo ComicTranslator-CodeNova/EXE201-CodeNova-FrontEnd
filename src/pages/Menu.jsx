@@ -47,11 +47,11 @@ export default function Menu() {
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
+            {/* <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
               <h3 className="text-sm text-gray-500">Tokens Remaining</h3>
-              <p className="text-3xl font-bold mt-2">42</p>
+              <p className="text-3xl font-bold mt-2 text-blue-600">42</p>
               <p className="text-xs text-gray-400">Approx. 42 comic pages</p>
-            </div>
+            </div> */}
             <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
               <h3 className="text-sm text-gray-500">Active Plan</h3>
               <span className="mt-2 inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
@@ -63,12 +63,12 @@ export default function Menu() {
             </div>
             <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
               <h3 className="text-sm text-gray-500">Translation Stats</h3>
-              <p className="text-3xl font-bold mt-2">65</p>
+              <p className="text-3xl font-bold mt-2 text-blue-600">65</p>
               <p className="text-xs text-green-600 mt-1">+12% this month</p>
             </div>
           </div>
 
-          {/* Need more tokens? */}
+          {/* Need more tokens?
           <div className="p-6 bg-blue-100/80 backdrop-blur-sm rounded-xl shadow mb-8 max-w-md">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
               Need more tokens?
@@ -85,7 +85,7 @@ export default function Menu() {
                 Upgrade Plan
               </button>
             </div>
-          </div>
+          </div> */}
 
           <div className="text-gray-400 italic text-center py-12">
             No recent comics to display yet.

@@ -25,7 +25,7 @@ export default function Sidebar() {
           Home
         </NavLink>
         <NavLink to="/tokens" className={linkClasses}>
-          Tokens
+          Plans
         </NavLink>
         <NavLink to="/settings" className={linkClasses}>
           Settings
