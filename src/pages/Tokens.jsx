@@ -1,119 +1,253 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
-import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Tokens() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [selected, setSelected] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
-  const tokenPackages = [
-    { amount: 50, price: 2.99, desc: "Basic package for light usage", height: "h-48" },
-    { amount: 100, price: 5.99, desc: "Most popular choice for regular users", height: "h-56" },
-    { amount: 500, price: 24.99, desc: "Best value for power users", height: "h-64" },
-    { amount: 1000, price: 39.99, desc: "Professional package with premium support", height: "h-72" },
+  const plans = [
+    {
+      name: "Free",
+      amount: 50,
+      price: 0,
+      desc: "Try our basic features for free.",
+      features: ["Basic support", "Limited AI access"],
+    },
+    {
+      name: "Standard",
+      amount: 500,
+      price: 260000,
+      desc: "Ideal for regular users with extended features.",
+      features: [
+        "Priority support",
+        "Full AI access",
+        "Monthly usage tracking",
+      ],
+      recommended: true,
+    },
+    {
+      name: "Premium",
+      amount: 1200,
+      price: 520000,
+      desc: "For professionals who need unlimited access.",
+      features: [
+        "24/7 premium support",
+        "Advanced AI access",
+        "Analytics dashboard",
+      ],
+    },
   ];
+
+  const handleSelect = (plan) => {
+    setSelected(plan);
+    setShowPopup(true);
+  };
 
   const handleContinue = () => {
     if (!selected) return;
-    navigate("/payment", { state: { packageId: selected.amount, price: selected.price } });
+    setShowPopup(false);
+    navigate("/payment", {
+      state: { packageId: selected.amount, price: selected.price },
+    });
+  };
+
+  const handleCancel = () => {
+    setShowPopup(false);
+    setSelected(null);
   };
 
   return (
-    <div className="flex min-h-screen bg-blue-600">
-      {/* Sidebar */}
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <Sidebar />
 
-      {/* Main Content */}
-      <main className="relative flex-1 overflow-hidden p-8">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 relative">
         {/* Background video */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-        >
-          <source src="/videos/background_menu.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-20"
+          >
+            <source src="/videos/background_menu.mp4" type="video/mp4" />
+          </video>
+        </div>
 
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/70 to-blue-100/60"></div>
+        {/* Header */}
+        <div className="relative z-10 text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900">Choose Your Plan</h1>
+          <p className="text-gray-600 mt-2">
+            Select the plan package that fits your needs.
+          </p>
+        </div>
 
-        {/* Actual content */}
-        <div className="relative z-10">
-          {/* Header user info */}
-          <div className="flex justify-between items-center mb-10">
-            <div>
-              <h2 className="text-2xl font-bold uppercase text-gray-900">TOKENS</h2>
-              <p className="text-gray-500">
-                Purchase Tokens — Select a package to continue...
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="font-semibold">{user?.display_name || "Anonymous"}</p>
-              <p className="text-gray-500 text-sm">{user?.email || ""}</p>
-            </div>
-          </div>
-
-          {/* Token packages */}
-          <div className="flex gap-6 items-end justify-center mb-8">
-            {tokenPackages.map((pkg, idx) => (
-              <div
-                key={idx}
-                onClick={() => setSelected(pkg)}
-                className={`flex flex-col justify-between border rounded-2xl shadow transition w-48 p-4 cursor-pointer
-                  ${pkg.height}
-                  ${
-                    selected?.amount === pkg.amount
-                      ? "bg-blue-100/90 border-blue-600 shadow-lg"
-                      : "bg-white/90 backdrop-blur-sm border-gray-200 hover:shadow-md"
-                  }
-                `}
-              >
-                <div>
-                  <h3 className="text-xl font-bold mb-1">{pkg.amount} Tokens</h3>
-                  <p className="text-lg font-semibold text-blue-600 mb-1">
-                    ${pkg.price.toFixed(2)}
-                  </p>
-                  <p className="text-xs text-gray-500">{pkg.desc}</p>
+        {/* Pricing Cards */}
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative bg-white rounded-2xl shadow-md border transition-all duration-300 flex flex-col p-8 hover:scale-105 ${
+                selected?.name === plan.name
+                  ? "border-blue-500 ring-2 ring-blue-300"
+                  : "border-gray-200"
+              } ${plan.recommended ? "shadow-xl scale-105" : ""}`}
+            >
+              {plan.recommended && (
+                <div className="absolute top-3 right-3 bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  Recommended
                 </div>
+              )}
+
+              <h2 className="text-2xl font-semibold text-gray-800">
+                {plan.name}
+              </h2>
+              <p className="text-gray-500 mt-2">{plan.desc}</p>
+
+             <div className="mt-6">
+              {plan.price === 0 ? (
+                <span className="text-4xl font-bold text-green-600">Miễn phí</span>
+              ) : (
+                <>
+                  <span className="text-4xl font-bold text-blue-600">
+                    {plan.price.toLocaleString("vi-VN")} ₫
+                  </span>
+                  <span className="text-gray-500 ml-1 text-sm">/ tháng</span>
+                </>
+              )}
+            </div>
+
+
+              <ul className="mt-6 text-gray-600 space-y-2 text-left">
+                {plan.features.map((f, i) => (
+                  <li key={i} className="flex items-center">
+                    <svg
+                      className="w-5 h-5 text-blue-500 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={() => handleSelect(plan)}
+                className="mt-auto w-full py-3 rounded-lg font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300"
+              >
+                Select
+              </button>
+            </div>
+          ))}
+        </div>
+        
+              {/* Comparison Table */}
+        <div className="relative z-10 mt-24 max-w-6xl w-full">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+            Compare Plan Features
+          </h2>
+          <table className="w-full border-collapse bg-white rounded-lg shadow overflow-hidden">
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="py-3 px-4 text-left">Features</th>
+                {plans.map((plan) => (
+                  <th key={plan.name} className="py-3 px-4 text-center">
+                    {plan.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="text-gray-700">
+              <tr className="border-b">
+                <td className="py-3 px-4 font-semibold">Price</td>
+                {plans.map((plan) => (
+                  <td key={plan.name} className="py-3 px-4 text-center text-blue-600 font-medium">
+                    {plan.price === 0 ? "Miễn phí" : `${plan.price.toLocaleString("vi-VN")} ₫`}
+                  </td>
+
+                ))}
+              </tr>
+              <tr className="border-b">
+                <td className="py-3 px-4 font-semibold">AI Access</td>
+                {plans.map((plan) => (
+                  <td key={plan.name} className="py-3 px-4 text-center">
+                    {plan.features.includes("Full AI access") ||
+                    plan.features.includes("Advanced AI access")
+                      ? "✅"
+                      : "⚪"}
+                  </td>
+                ))}
+              </tr>
+              <tr className="border-b">
+                <td className="py-3 px-4 font-semibold">Support</td>
+                {plans.map((plan) => (
+                  <td key={plan.name} className="py-3 px-4 text-center">
+                    {plan.features.find((f) => f.includes("support")) || "—"}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-semibold">Analytics</td>
+                {plans.map((plan) => (
+                  <td key={plan.name} className="py-3 px-4 text-center">
+                    {plan.features.find((f) => f.includes("Analytics")) ||
+                    plan.features.find((f) => f.includes("tracking"))
+                      ? "✅"
+                      : "⚪"}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        {/* Popup Modal */}
+        {showPopup && selected && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
+              <h2 className="text-2xl font-bold mb-3 text-gray-800">
+                Confirm Your Plan
+              </h2>
+              <p className="text-gray-600 mb-6">
+                You’ve selected the{" "}
+                <span className="font-semibold text-blue-600">
+                  {selected.name}
+                </span>{" "}
+                plan for{" "}
+                <span className="font-semibold">${selected.price}</span>.
+              </p>
+
+              <div className="flex justify-center gap-4">
                 <button
-                  className={`mt-4 py-1.5 rounded-full transition
-                    ${
-                      selected?.amount === pkg.amount
-                        ? "bg-blue-700 text-white"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }
-                  `}
+                  onClick={handleContinue}
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
-                  {selected?.amount === pkg.amount ? "Selected" : "Buy Now"}
+                  Continue to Payment
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition"
+                >
+                  Cancel
                 </button>
               </div>
-            ))}
-          </div>
-
-          {/* Continue payment */}
-          {selected && (
-            <div className="text-center mt-6">
-              <button
-                onClick={handleContinue}
-                className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800"
-              >
-                Continue to Payment
-              </button>
-              <div
-                onClick={() => setSelected(null)}
-                className="text-blue-500 text-sm mt-2 cursor-pointer hover:underline"
-              >
-                Cancel
-              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </main>
     </div>
   );
