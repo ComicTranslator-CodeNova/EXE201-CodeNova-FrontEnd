@@ -8,6 +8,7 @@ import Menu from "./pages/Menu";
 import Tokens from "./pages/Tokens";
 import Payment from "./pages/Payment";
 import Setting from "./pages/Settings";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/tokens" element={<Tokens />} />
       <Route path="/payment" element={<Payment />} />
       <Route path="/settings" element={<Setting />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }
