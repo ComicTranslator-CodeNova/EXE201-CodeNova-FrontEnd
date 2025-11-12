@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useTranslation } from "react-i18next"; 
 
 export default function Login() {
+  const { t } = useTranslation("login"); 
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -27,13 +29,9 @@ export default function Login() {
         throw new Error(data.error || "Login failed");
       }
 
-      // ✅ Lưu user vào context
       login(data.user);
-
-      // ✅ (tuỳ chọn) lưu token để dùng cho API sau này
       localStorage.setItem("token", data.token);
-
-      navigate("/"); // chuyển về home
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -42,19 +40,7 @@ export default function Login() {
   return (
     <div className="flex min-h-screen">
       {/* Left panel */}
-      {/* <div className="flex flex-col justify-center bg-black text-white w-1/2 p-16">
-        <h1 className="text-2xl font-bold mb-6">ComicTranslator</h1>
-        <h2 className="text-4xl font-bold mb-4">
-          Translate Comics Instantly in Your Language
-        </h2>
-        <p className="text-gray-300">
-          No downloads. No hassle. ComicTranslator brings every panel to life
-          in your tongue.
-        </p>
-      </div> */}
-
       <div className="relative flex flex-col justify-center text-white w-1/2 p-16 overflow-hidden">
-        {/* Video background */}
         <video
           autoPlay
           loop
@@ -63,37 +49,28 @@ export default function Login() {
           className="absolute inset-0 w-full h-full object-cover opacity-60"
         >
           <source src="/videos/background_login.mp4" type="video/mp4" />
-          {/* fallback nếu browser không support */}
-          Your browser does not support the video tag.
+          {t("video_fallback")}
         </video>
 
-        {/* Overlay nội dung */}
         <div className="relative z-10">
-          <h1 className="text-2xl font-bold mb-6">ComicTranslator</h1>
-          <h2 className="text-4xl font-bold mb-4">
-            Translate Comics Instantly in Your Language
-          </h2>
-          <p className="text-gray-300">
-            No downloads. No hassle. ComicTranslator brings every panel to life
-            in your tongue.
-          </p>
+          <h1 className="text-2xl font-bold mb-6">{t("app_name")}</h1>
+          <h2 className="text-4xl font-bold mb-4">{t("headline")}</h2>
+          <p className="text-gray-300">{t("description")}</p>
         </div>
       </div>
 
       {/* Right panel */}
       <div className="flex flex-col justify-center w-1/2 p-16">
         <div className="max-w-md mx-auto w-full">
-          <h2 className="text-3xl font-semibold mb-2">Login</h2>
-          <p className="text-gray-500 mb-6">
-            Welcome back. Please login to continue.
-          </p>
+          <h2 className="text-3xl font-semibold mb-2">{t("title")}</h2>
+          <p className="text-gray-500 mb-6">{t("subtitle")}</p>
 
           {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
 
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              placeholder="Email"
+              placeholder={t("email_placeholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mb-4 p-3 border rounded"
@@ -101,7 +78,7 @@ export default function Login() {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder={t("password_placeholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mb-2 p-3 border rounded"
@@ -113,7 +90,7 @@ export default function Login() {
                 to="/forgot-password"
                 className="text-blue-500 text-sm hover:underline"
               >
-                Forgot Password?
+                {t("forgot_password")}
               </Link>
             </div>
 
@@ -121,21 +98,14 @@ export default function Login() {
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full mb-6"
             >
-              Login
+              {t("login_button")}
             </button>
           </form>
 
-          {/* <p className="text-center text-gray-400 mb-4">or continue with</p>
-          <div className="flex justify-center gap-4 mb-6">
-            <button className="border p-2 rounded-full w-10 h-10">G</button>
-            <button className="border p-2 rounded-full w-10 h-10">f</button>
-            <button className="border p-2 rounded-full w-10 h-10">GH</button>
-          </div> */}
-
           <p className="text-center text-sm">
-            Don’t have an account?{" "}
+            {t("no_account")}{" "}
             <Link to="/register" className="text-blue-500 hover:underline">
-              Register
+              {t("register")}
             </Link>
           </p>
         </div>
