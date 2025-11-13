@@ -1,9 +1,18 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import { useAuth } from "../hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 export default function Menu() {
   const { user } = useAuth();
+  const { t, i18n } = useTranslation("menu");
+
+  // 🔁 Chuyển ngôn ngữ
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "vi" : "en";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("lang", newLang);
+  };
 
   return (
     <div className="flex min-h-screen bg-blue-600">
@@ -21,11 +30,21 @@ export default function Menu() {
           className="absolute inset-0 w-full h-full object-cover opacity-40"
         >
           <source src="/videos/background_menu.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
+          {t("video_fallback")}
         </video>
 
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/70 to-blue-100/60"></div>
+
+        {/* 🔘 Nút chuyển ngữ */}
+        <div className="absolute top-6 right-6 z-50">
+          <button
+            onClick={toggleLanguage}
+            className="bg-gray-900/60 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800"
+          >
+            {i18n.language === "en" ? "🇺🇸 English" : "🇻🇳 Tiếng Việt"}
+          </button>
+        </div>
 
         {/* Actual content */}
         <div className="relative z-10">
@@ -33,62 +52,39 @@ export default function Menu() {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h2 className="text-2xl font-bold">
-                Hi, {user?.display_name || user?.email || "User"} 👋
+                {t("hi")}, {user?.display_name || user?.email || "User"} 👋
               </h2>
-              <p className="text-gray-600">
-                Welcome back to your ComicTranslator dashboard
-              </p>
+              <p className="text-gray-600">{t("welcome_msg")}</p>
             </div>
             <div className="text-right">
-              <p className="font-semibold">{user?.display_name || "Anonymous"}</p>
+              <p className="font-semibold">
+                {user?.display_name || "Anonymous"}
+              </p>
               <p className="text-gray-500 text-sm">{user?.email || ""}</p>
             </div>
           </div>
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {/* <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
-              <h3 className="text-sm text-gray-500">Tokens Remaining</h3>
-              <p className="text-3xl font-bold mt-2 text-blue-600">42</p>
-              <p className="text-xs text-gray-400">Approx. 42 comic pages</p>
-            </div> */}
             <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
-              <h3 className="text-sm text-gray-500">Active Plan</h3>
+              <h3 className="text-sm text-gray-500">{t("active_plan")}</h3>
               <span className="mt-2 inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-                Monthly Pass
+                {t("monthly_pass")}
               </span>
               <p className="text-xs text-gray-400 mt-1">
-                Renews on June 15, 2025
+                {t("renews_on")} June 15, 2025
               </p>
             </div>
+
             <div className="p-6 bg-white/90 backdrop-blur-sm border rounded-xl shadow">
-              <h3 className="text-sm text-gray-500">Translation Stats</h3>
+              <h3 className="text-sm text-gray-500">{t("translation_stats")}</h3>
               <p className="text-3xl font-bold mt-2 text-blue-600">65</p>
-              <p className="text-xs text-green-600 mt-1">+12% this month</p>
+              <p className="text-xs text-green-600 mt-1">{t("growth")}</p>
             </div>
           </div>
 
-          {/* Need more tokens?
-          <div className="p-6 bg-blue-100/80 backdrop-blur-sm rounded-xl shadow mb-8 max-w-md">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Need more tokens?
-            </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Purchase additional tokens or upgrade to a subscription plan for
-              unlimited translations.
-            </p>
-            <div className="flex gap-4">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Buy Tokens
-              </button>
-              <button className="bg-white text-blue-600 border border-blue-600 px-4 py-2 rounded hover:bg-blue-50">
-                Upgrade Plan
-              </button>
-            </div>
-          </div> */}
-
           <div className="text-gray-400 italic text-center py-12">
-            No recent comics to display yet.
+            {t("no_recent")}
           </div>
         </div>
       </main>

@@ -1,151 +1,181 @@
-// src/pages/Pricing.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Header cho khách chưa đăng nhập
 function HeaderPublic() {
+  const { t } = useTranslation("pricing");
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-black/80 text-white">
       <Link to="/" className="text-2xl font-bold tracking-wide">
-        ComicTranslator
+        {t("app_name")}
       </Link>
       <nav className="flex items-center gap-6">
-        <Link to="/login" className="hover:text-blue-400 transition">Login</Link>
-        <Link to="/register" className="hover:text-blue-400 transition">Register</Link>
+        <Link to="/login" className="hover:text-blue-400 transition">
+          {t("header_login")}
+        </Link>
+        <Link to="/register" className="hover:text-blue-400 transition">
+          {t("header_register")}
+        </Link>
       </nav>
     </header>
   );
 }
 
-// Dấu check/blank
 const Check = () => <span className="text-blue-600 font-bold">✔</span>;
-const Dash  = () => <span className="text-gray-300">—</span>;
-
-// Dữ liệu bảng so sánh
-const plans = ["Free", "Plus", "Pro", "Enterprise"];
-const rows = [
-  { feature: "Basic token usage",      Free: true,  Plus: true,  Pro: true,  Enterprise: true },
-  { feature: "Standard support",       Free: true,  Plus: true,  Pro: true,  Enterprise: true },
-  { feature: "5 projects",             Free: true,  Plus: true,  Pro: true,  Enterprise: true },
-  { feature: "Advanced analytics",     Free: false, Plus: true,  Pro: true,  Enterprise: true },
-  { feature: "Custom integrations",    Free: false, Plus: false, Pro: true,  Enterprise: true },
-  { feature: "Unlimited projects",     Free: false, Plus: false, Pro: true,  Enterprise: true },
-  { feature: "Priority support",       Free: false, Plus: false, Pro: true,  Enterprise: true },
-  { feature: "Custom branding",        Free: false, Plus: false, Pro: false, Enterprise: true },
-];
+const Dash = () => <span className="text-gray-300">—</span>;
 
 export default function Pricing() {
+  const { t } = useTranslation("pricing");
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-300">
       <HeaderPublic />
 
       <main className="max-w-6xl mx-auto py-16 px-6">
         <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-12 tracking-wide">
-          SUBSCRIPTION PLANS
+          {t("title")}
         </h1>
 
         {/* ====== 3 gói ====== */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
           {/* Free */}
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Free</h3>
-            <p className="text-gray-500 mb-4">Perfect for getting started with basic features</p>
-            <p className="text-5xl font-extrabold text-blue-600 mb-4">Free</p>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">{t("free_title")}</h3>
+            <p className="text-gray-500 mb-4">{t("free_desc")}</p>
+            <p className="text-5xl font-extrabold text-blue-600 mb-4">{t("free_price")}</p>
             <ul className="text-gray-700 text-sm mb-6 space-y-2 text-left inline-block">
-              <li><Check /> <span className="ml-2">Basic support</span></li>
-              <li><Check /> <span className="ml-2">5 chapters per day</span></li>
-              <li><Check /> <span className="ml-2">Standard speed</span></li>
+              {t("free_features", { returnObjects: true }).map((f, i) => (
+                <li key={i}>
+                  <Check /> <span className="ml-2">{f}</span>
+                </li>
+              ))}
             </ul>
             <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
-              Choose Free
+              {t("free_btn")}
             </button>
           </div>
 
           {/* Plus */}
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center border-4 border-blue-400 hover:shadow-xl transition">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Plus</h3>
-            <p className="text-gray-500 mb-4">Ideal for professionals and growing teams</p>
-            <p className="text-5xl font-extrabold text-blue-600 mb-1">$2.99</p>
-            <p className="text-gray-600 -mt-2 mb-3">/month</p>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">{t("plus_title")}</h3>
+            <p className="text-gray-500 mb-4">{t("plus_desc")}</p>
+            <p className="text-5xl font-extrabold text-blue-600 mb-1">{t("plus_price")}</p>
+            <p className="text-gray-600 -mt-2 mb-3">{t("plus_month")}</p>
             <ul className="text-gray-700 text-sm mb-6 space-y-2 text-left inline-block">
-              <li><Check /> <span className="ml-2">Plus support (AI recommend)</span></li>
-              <li><Check /> <span className="ml-2">20 chapters per day</span></li>
-              <li><Check /> <span className="ml-2">Offline mode</span></li>
+              {t("plus_features", { returnObjects: true }).map((f, i) => (
+                <li key={i}>
+                  <Check /> <span className="ml-2">{f}</span>
+                </li>
+              ))}
             </ul>
             <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
-              Subscribe Plus
+              {t("plus_btn")}
             </button>
           </div>
 
           {/* Pro */}
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Pro</h3>
-            <p className="text-gray-500 mb-4">For organizations with advanced needs</p>
-            <p className="text-5xl font-extrabold text-blue-600 mb-1">$7.99</p>
-            <p className="text-gray-600 -mt-2 mb-3">/month</p>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">{t("pro_title")}</h3>
+            <p className="text-gray-500 mb-4">{t("pro_desc")}</p>
+            <p className="text-5xl font-extrabold text-blue-600 mb-1">{t("pro_price")}</p>
+            <p className="text-gray-600 -mt-2 mb-3">{t("pro_month")}</p>
             <ul className="text-gray-700 text-sm mb-6 space-y-2 text-left inline-block">
-              <li><Check /> <span className="ml-2">Premium supports (Priority first)</span></li>
-              <li><Check /> <span className="ml-2">Unlimited chapters</span></li>
-              <li><Check /> <span className="ml-2">Dev mode</span></li>
-              <li><Check /> <span className="ml-2">Offline mode</span></li>
+              {t("pro_features", { returnObjects: true }).map((f, i) => (
+                <li key={i}>
+                  <Check /> <span className="ml-2">{f}</span>
+                </li>
+              ))}
             </ul>
             <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition">
-              Contact Sales
+              {t("pro_btn")}
             </button>
           </div>
         </div>
 
         {/* ====== Compare Plans ====== */}
-        <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">Compare Plans</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">
+          {t("compare_title")}
+        </h2>
         <p className="text-center text-sm text-gray-600 mb-6">
-          All plans include 24/7 support and 30-day money-back guarantee.
+          {t("compare_subtitle")}
         </p>
 
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead className="bg-gray-100 text-gray-800">
-                <tr>
-                  <th className="p-4 w-1/3">Feature</th>
-                  {plans.map((p) => (
-                    <th
-                      key={p}
-                      className={`p-4 text-center ${p === "Pro" ? "bg-blue-50" : ""}`}
-                    >
-                      {p}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r, idx) => (
-                  <tr key={r.feature} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                    <td className="p-4 text-gray-800">{r.feature}</td>
-                    {plans.map((p) => (
-                      <td
-                        key={p}
-                        className={`p-4 text-center ${p === "Pro" ? "bg-blue-50" : ""}`}
+        {(() => {
+          const planCols = [
+            t("plan_free"),
+            t("plan_plus"),
+            t("plan_pro"),
+            t("plan_enterprise")
+          ];
+
+          const features = t("features_table", { returnObjects: true });
+
+          // Ma trận cố định đúng như ảnh chuẩn
+          const matrix = [
+            [true,  true,  true,  true],  // Basic token usage
+            [true,  true,  true,  true],  // Standard support
+            [true,  true,  true,  true],  // 5 projects
+            [false, true,  true,  true],  // Advanced analytics
+            [false, false, true,  true],  // Custom integrations
+            [false, false, true,  true],  // Unlimited projects
+            [false, false, true,  true],  // Priority support
+            [false, false, false, true]   // Custom branding
+          ];
+
+          return (
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead className="bg-gray-100 text-gray-800">
+                    <tr>
+                      <th className="p-4 w-1/3">{t("compare_feature")}</th>
+                      {planCols.map((name, idx) => (
+                        <th
+                          key={idx}
+                          className={`p-4 text-center ${name === t("plan_pro") ? "bg-blue-50" : ""}`}
+                        >
+                          {name}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {features.map((label, rowIdx) => (
+                      <tr
+                        key={label}
+                        className={rowIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}
                       >
-                        {r[p] ? <Check /> : <Dash />}
-                      </td>
+                        <td className="p-4 text-gray-800">{label}</td>
+                        {matrix[rowIdx].map((has, colIdx) => (
+                          <td
+                            key={`${rowIdx}-${colIdx}`}
+                            className={`p-4 text-center ${
+                              planCols[colIdx] === t("plan_pro") ? "bg-blue-50" : ""
+                            }`}
+                          >
+                            {has ? <Check /> : <Dash />}
+                          </td>
+                        ))}
+                      </tr>
                     ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ====== Actions ====== */}
         <div className="flex justify-center gap-4 mt-10">
           <button className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
-            Continue to Payment
+            {t("actions_pay")}
           </button>
           <Link
             to="/"
             className="bg-gray-200 text-gray-800 px-6 py-3 rounded-full hover:bg-gray-300 transition"
           >
-            Back to Dashboard
+            {t("actions_back")}
           </Link>
         </div>
       </main>

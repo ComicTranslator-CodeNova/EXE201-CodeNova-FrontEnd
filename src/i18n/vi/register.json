@@ -1,0 +1,17 @@
+{
+  "app_name": "ComicTranslator",
+  "headline": "Tham Gia Kỷ Nguyên Dịch Truyện Mới",
+  "description": "Không cần tải xuống. Không rắc rối. Tạo tài khoản và bắt đầu dịch truyện ngay lập tức.",
+  "video_fallback": "Trình duyệt của bạn không hỗ trợ video.",
+
+  "title": "Tạo Tài Khoản",
+  "subtitle": "Đăng ký để sử dụng ComicTranslator",
+  "email_placeholder": "Email",
+  "password_placeholder": "Mật khẩu",
+  "confirm_placeholder": "Xác nhận mật khẩu",
+  "password_mismatch": "Mật khẩu không khớp.",
+  "register_button": "Đăng ký",
+  "registering": "Đang đăng ký...",
+  "have_account": "Đã có tài khoản?",
+  "login": "Đăng nhập"
+}

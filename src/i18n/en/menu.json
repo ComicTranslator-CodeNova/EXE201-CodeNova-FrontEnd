@@ -1,0 +1,11 @@
+{
+  "video_fallback": "Your browser does not support the video tag.",
+  "hi": "Hi",
+  "welcome_msg": "Welcome back to your ComicTranslator dashboard",
+  "active_plan": "Active Plan",
+  "monthly_pass": "Monthly Pass",
+  "renews_on": "Renews on",
+  "translation_stats": "Translation Stats",
+  "growth": "+12% this month",
+  "no_recent": "No recent comics to display yet."
+}
