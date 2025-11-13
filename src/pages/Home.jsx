@@ -17,19 +17,18 @@ export default function Home() {
      
   return (
     <div className="w-full">
-      <Header />  {/* 👈 Thêm header */}
-      
-      {/* 🔘 Nút chuyển ngữ (toàn cục) */}
-      <div className="absolute top-6 right-6 z-50">
+      {/* 🔘 Nút chuyển ngữ (cố định góc dưới) */}
+      <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={toggleLanguage}
-          className="bg-gray-900/60 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition"
+          className="bg-gray-900/60 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition backdrop-blur-sm"
         >
           {/* 👇 hiển thị ngôn ngữ bạn sẽ CHUYỂN SANG */}
-          {i18n.language === "en" ? "🇺🇸 English" : "🇻🇳 Tiếng Việt"}
+          {i18n.language === "en" ? "🇻🇳 Tiếng Việt" : "🇺🇸 English"}
         </button>
       </div>
-      
+
+      <Header />  {/* 👈 Thêm header */}
 {/* Section hero */}
       <section
         id="hero"
@@ -388,8 +387,13 @@ export default function Home() {
       <h4 className="text-white font-semibold mb-3">{t("footer_social_title")}</h4>
       <div className="flex gap-4">
         <a href="#" className="hover:text-white transition">🌐</a>
-        <a href="#" className="hover:text-white transition">🐦</a>
-        <a href="#" className="hover:text-white transition">📘</a>
+        <a href="https://www.facebook.com/profile.php?id=61582946912146" target="_blank" rel="noopener noreferrer">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 12C22 6.48 17.52 2 12 2S2 6.48 2 12c0 5 3.66 9.13 8.44 9.88v-6.99h-2.54v-2.89h2.54V9.83c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.89h-2.3v6.99C18.34 21.13 22 17 22 12z"/>
+  </svg>
+</a>
+
+
       </div>
       <p className="text-xs text-gray-500 mt-4">
         © {new Date().getFullYear()} {t("footer_brand")}. {t("footer_rights")}

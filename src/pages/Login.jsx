@@ -29,8 +29,7 @@ export default function Login() {
         throw new Error(data.error || "Login failed");
       }
 
-      login(data.user);
-      localStorage.setItem("token", data.token);
+      login(data.user, data.token); 
       navigate("/");
     } catch (err) {
       setError(err.message);
