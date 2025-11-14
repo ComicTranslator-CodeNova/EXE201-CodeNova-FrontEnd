@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import codenova2 from "../assets/codenova2.mp4";
+import codenova2 from "../assets/Tutorial video CODENOVA (final).mp4";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -72,7 +72,7 @@ export default function Home() {
           <div className="relative max-w-4xl w-full mx-4">
             <button
               onClick={() => setShowVideo(false)}
-              className="absolute -top-12 right-0 text-white text-4xl"
+              className="absolute -top-12 right-0 text-white text-xl"
             >
               ✕
             </button>
