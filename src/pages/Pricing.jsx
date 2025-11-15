@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 
 // Header cho khách chưa đăng nhập
 function HeaderPublic() {
   const { t } = useTranslation("pricing");
+  const navigate = useNavigate();
+
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-black/80 text-white">
       <Link to="/" className="text-2xl font-bold tracking-wide">
