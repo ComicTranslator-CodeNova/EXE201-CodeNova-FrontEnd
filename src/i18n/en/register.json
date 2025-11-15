@@ -1,0 +1,17 @@
+{
+  "app_name": "ComicTranslator",
+  "headline": "Join the Future of Comic Translation",
+  "description": "No downloads. No hassle. Create your account and start translating comics instantly.",
+  "video_fallback": "Your browser does not support the video tag.",
+
+  "title": "Create Account",
+  "subtitle": "Sign up to access ComicTranslator",
+  "email_placeholder": "Email",
+  "password_placeholder": "Password",
+  "confirm_placeholder": "Confirm Password",
+  "password_mismatch": "Passwords do not match.",
+  "register_button": "Register",
+  "registering": "Registering...",
+  "have_account": "Already have an account?",
+  "login": "Login"
+}

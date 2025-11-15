@@ -1,0 +1,62 @@
+{
+  "app_name": "ComicTranslator",
+  "header_login": "Login",
+  "header_register": "Register",
+
+  "title": "Subscription Plans",
+  "free_title": "Free",
+  "free_desc": "Perfect for getting started with basic features",
+  "free_price": "Free",
+  "free_btn": "Choose Free",
+  "free_features": [
+    "Basic support",
+    "5 chapters per day",
+    "Standard speed"
+  ],
+
+  "plus_title": "Plus",
+  "plus_desc": "Ideal for professionals and growing teams",
+  "plus_price": "$2.99",
+  "plus_month": "/month",
+  "plus_btn": "Subscribe Plus",
+  "plus_features": [
+    "Plus support (AI recommend)",
+    "20 chapters per day",
+    "Offline mode"
+  ],
+
+  "pro_title": "Pro",
+  "pro_desc": "For organizations with advanced needs",
+  "pro_price": "$7.99",
+  "pro_month": "/month",
+  "pro_btn": "Contact Sales",
+  "pro_features": [
+    "Premium supports (Priority first)",
+    "Unlimited chapters",
+    "Dev mode",
+    "Offline mode"
+  ],
+
+  "compare_title": "Compare Plans",
+  "compare_subtitle": "All plans include 24/7 support and 30-day money-back guarantee.",
+  "compare_feature": "Feature",
+  "actions_pay": "Continue to Payment",
+  "actions_back": "Back to Dashboard",
+
+  "features_table": [
+    "Basic token usage",
+    "Standard support",
+    "5 projects",
+    "Advanced analytics",
+    "Custom integrations",
+    "Unlimited projects",
+    "Priority support",
+    "Custom branding"
+  ],
+
+  "plan_free": "Free",
+  "plan_plus": "Plus",
+  "plan_pro": "Pro",
+  "plan_enterprise": "Enterprise"
+}
+

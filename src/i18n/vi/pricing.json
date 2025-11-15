@@ -1,0 +1,62 @@
+{
+  "app_name": "ComicTranslator",
+  "header_login": "Đăng nhập",
+  "header_register": "Đăng ký",
+
+  "title": "Gói Dịch Vụ",
+  "free_title": "Miễn phí",
+  "free_desc": "Phù hợp để bắt đầu với các tính năng cơ bản",
+  "free_price": "Miễn phí",
+  "free_btn": "Chọn gói miễn phí",
+  "free_features": [
+    "Hỗ trợ cơ bản",
+    "5 chương mỗi ngày",
+    "Tốc độ tiêu chuẩn"
+  ],
+
+  "plus_title": "Plus",
+  "plus_desc": "Lý tưởng cho người dùng chuyên nghiệp và nhóm phát triển",
+  "plus_price": "$2.99",
+  "plus_month": "/tháng",
+  "plus_btn": "Đăng ký Plus",
+  "plus_features": [
+    "Hỗ trợ nâng cao (AI đề xuất)",
+    "20 chương mỗi ngày",
+    "Chế độ ngoại tuyến"
+  ],
+
+  "pro_title": "Pro",
+  "pro_desc": "Dành cho tổ chức có nhu cầu nâng cao",
+  "pro_price": "$7.99",
+  "pro_month": "/tháng",
+  "pro_btn": "Liên hệ mua gói",
+  "pro_features": [
+    "Hỗ trợ cao cấp (ưu tiên đầu tiên)",
+    "Không giới hạn chương",
+    "Chế độ phát triển",
+    "Chế độ ngoại tuyến"
+  ],
+
+  "compare_title": "So Sánh Gói",
+  "compare_subtitle": "Tất cả gói đều bao gồm hỗ trợ 24/7 và hoàn tiền trong 30 ngày.",
+  "compare_feature": "Tính năng",
+  "actions_pay": "Tiếp tục thanh toán",
+  "actions_back": "Quay lại bảng điều khiển",
+
+  "features_table": [
+    "Sử dụng token cơ bản",
+    "Hỗ trợ tiêu chuẩn",
+    "5 dự án",
+    "Phân tích nâng cao",
+    "Tích hợp tuỳ chỉnh",
+    "Không giới hạn dự án",
+    "Hỗ trợ ưu tiên",
+    "Tùy chỉnh thương hiệu"
+  ],
+
+  "plan_free": "Miễn phí",
+  "plan_plus": "Plus",
+  "plan_pro": "Pro",
+  "plan_enterprise": "Enterprise"
+}
+
