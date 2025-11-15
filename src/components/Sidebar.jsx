@@ -37,7 +37,7 @@ export default function Sidebar() {
         {/* Back to main website */}
         <NavLink
           to="/"
-          className={`${linkClasses} w-full text-center bg-black hover:bg-blue-800 text-red-300 px-3 py-2 rounded`}
+          className={`${linkClasses} w-full text-center bg-black hover:bg-blue-800 text-white px-3 py-2 rounded`}
         >
           ← Back to Web Page
         </NavLink>
@@ -48,7 +48,7 @@ export default function Sidebar() {
             logout();
             navigate("/menu");
           }}
-          className="w-full px-3 py-2 rounded hover:bg-blue-800 text-red-300 text-center"
+          className="w-full px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white text-center"
         >
           Log out
         </button>

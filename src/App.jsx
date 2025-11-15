@@ -9,6 +9,7 @@ import Tokens from "./pages/Tokens";
 import Payment from "./pages/Payment";
 import Setting from "./pages/Settings";
 import Admin from "./pages/Admin";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
       <Route path="/tokens" element={<Tokens />} />
       <Route path="/payment" element={<Payment />} />
       <Route path="/settings" element={<Setting />} />
-      <Route path="/admin" element={<Admin />} />
+      {/* Bảo vệ các route của Admin */}
+      <Route element={<AdminRoute />}>
+        <Route path="/admin/*" element={<Admin />} />
+      </Route>
     </Routes>
   );
 }

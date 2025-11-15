@@ -29,8 +29,14 @@ export default function Login() {
         throw new Error(data.error || "Login failed");
       }
 
-      login(data.user, data.token); 
-      navigate("/");
+      login(data.user, data.token);
+
+      // **LOGIC CHUYỂN HƯỚNG DỰA TRÊN VAI TRÒ**
+      if (data.user && data.user.role === "admin") {
+        navigate("/admin"); // Chuyển hướng admin tới trang quản trị
+      } else {
+        navigate("/menu"); // Chuyển hướng người dùng thường tới trang menu
+      }
     } catch (err) {
       setError(err.message);
     }

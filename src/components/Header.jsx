@@ -8,11 +8,9 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation("header");
-
   const scrollToSection = (id) => {
     const doScroll = () =>
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(doScroll, 100);
@@ -20,15 +18,6 @@ export default function Header() {
       doScroll();
     }
   };
-
-  const handleMenuClick = () => {
-    if (user) {
-      navigate("/menu");
-    } else {
-      navigate("/login");
-    }
-  };
-
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-black text-white">
       {/* Logo */}
@@ -53,18 +42,29 @@ export default function Header() {
         <button onClick={() => scrollToSection("testimonials")} className="hover:text-blue-400 transition">
           {t("nav_reviews")}
         </button>
-
-        {/* ✅ Menu button */}
-        <button onClick={handleMenuClick} className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 transition">
-          {t("nav_menu")}
-        </button>
       </nav>
 
       {/* User info */}
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            <span>{user.display_name || user.id}</span>
+            {/* Nút Admin chỉ hiển thị cho admin */}
+            {user.role === "admin" && (
+              <button
+                onClick={() => navigate("/admin")}
+                className="bg-yellow-500 text-black px-3 py-1 rounded hover:bg-yellow-400 transition font-semibold"
+              >
+                Admin
+              </button>
+            )}
+
+            <button
+              onClick={() => navigate("/menu")}
+              className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 transition"
+            >
+              {t("nav_menu")}
+            </button>
+            <span className="text-gray-300">{user.display_name || user.email}</span>
             <button
               onClick={logout}
               className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded"
@@ -74,15 +74,12 @@ export default function Header() {
           </>
         ) : (
           <>
-            <Link
-              to="/login"
-              className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 text-white"
-            >
+            <Link to="/login" className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 text-white">
               {t("nav_login")}
             </Link>
             <Link
               to="/register"
-              className="border border-white px-3 py-1 rounded hover:bg-gray-700"
+              className="border border-white px-3 py-1 rounded hover:bg-white hover:text-black transition-colors"
             >
               {t("nav_register")}
             </Link>
