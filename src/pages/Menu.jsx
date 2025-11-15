@@ -48,21 +48,36 @@ export default function Menu() {
 
         {/* Actual content */}
         <div className="relative z-10">
-          {/* Header user info */}
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h2 className="text-2xl font-bold">
-                {t("hi")}, {user?.display_name || user?.email || "User"} 👋
-              </h2>
-              <p className="text-gray-600">{t("welcome_msg")}</p>
+          
+          {/* === (BẮT ĐẦU PHẦN SỬA) === */}
+          {/* Header user info (ĐÃ DESIGN LẠI) */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-8 flex items-center gap-5">
+            
+            {/* Avatar */}
+            <div className="w-16 h-16 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center overflow-hidden border-2 border-white shadow-md">
+              {user?.avatar_url ? (
+                // Nếu có avatar_url, hiển thị ảnh
+                <img src={user.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                // Nếu không, hiển thị chữ cái đầu
+                <span className="text-white text-3xl font-bold">
+                  {(user?.display_name || user?.email || "U")[0].toUpperCase()}
+                </span>
+              )}
             </div>
-            <div className="text-right">
-              <p className="font-semibold">
-                {user?.display_name || "Anonymous"}
+
+            {/* Thông tin Chào mừng */}
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800">
+                Welcome back, {user?.display_name || user?.email}! 👋
+              </h2>
+              <p className="text-gray-600 mt-1">
+                Here's a quick look at your ComicTranslator dashboard.
               </p>
-              <p className="text-gray-500 text-sm">{user?.email || ""}</p>
             </div>
           </div>
+          {/* === (KẾT THÚC PHẦN SỬA) === */}
+
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

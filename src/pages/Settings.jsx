@@ -1,34 +1,45 @@
-import React, { useEffect, useState } from "react";
+// File: src/pages/Settings.jsx
+
+import React, { useEffect, useState, useRef } from "react";
 import Sidebar from "../components/Sidebar";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Setting() {
-  const { user, login } = useAuth(); // login ở đây để update lại context khi update profile
+  const { user, login } = useAuth();
+  
   const [form, setForm] = useState({
-    display_name: "",
+    nickname: "",
     avatar_url: "",
     email: "",
   });
+  
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const token = localStorage.getItem("token");
+  
+  // Tạo một ref để trỏ tới input file bị ẩn
+  const fileInputRef = useRef(null);
 
-  // ----------- Lấy dữ liệu user khi mở trang -----------
+  // 1. Lấy dữ liệu user khi mở trang
   useEffect(() => {
     const fetchProfile = async () => {
+      if (!token) {
+          setLoading(false);
+          return;
+      }
       try {
         const res = await fetch("http://localhost:5000/api/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
-        if (res.ok) {
+        
+        if (res.ok && data.success) {
           setForm({
-            display_name: data.display_name || "",
-            avatar_url: data.avatar_url || "",
-            email: data.email || "",
+            nickname: data.data.nickname || data.data.display_name || "",
+            avatar_url: data.data.avatar_url || "",
+            email: data.data.email || "",
           });
-          // cập nhật lại context (để đồng bộ header / user info)
-          login(data, token);
+          login(data.data, token);
         } else {
           console.error("Lỗi tải profile:", data.error);
         }
@@ -41,32 +52,30 @@ export default function Setting() {
     fetchProfile();
   }, [token, login]);
 
-  // ----------- Xử lý khi gõ input -----------
+  // 2. Xử lý khi gõ input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ----------- Lưu thay đổi profile -----------
-  const handleSave = async () => {
+  // 3. Lưu thay đổi Nickname
+  const handleSaveNickname = async () => {
     setSaving(true);
     try {
-      const res = await fetch("http://localhost:5000/api/user/profile", {
-        method: "PUT",
+      const res = await fetch("http://localhost:5000/api/profile/update-nickname", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          display_name: form.display_name,
-          avatar_url: form.avatar_url,
-        }),
+        body: JSON.stringify({ nickname: form.nickname }),
       });
-
+      
       const data = await res.json();
       if (res.ok) {
-        alert("✅ Cập nhật profile thành công!");
-        login({ ...user, ...form }, token);
+        alert("✅ Cập nhật nickname thành công!");
+        // Cập nhật AuthContext
+        login({ ...user, nickname: data.nickname, display_name: data.nickname }, token);
       } else {
         alert("❌ Lỗi: " + (data.error || "Không thể lưu thay đổi"));
       }
@@ -76,6 +85,49 @@ export default function Setting() {
     } finally {
       setSaving(false);
     }
+  };
+
+  // 4. (MỚI) Xử lý khi chọn file (Tự động tải lên)
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    // 'avatar' phải TRÙNG KHỚP với tên field trong upload.single('avatar') ở backend
+    formData.append('avatar', file);
+
+    setSaving(true); // Báo là đang "Lưu"
+    try {
+      const res = await fetch("http://localhost:5000/api/profile/upload-avatar", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // KHÔNG set 'Content-Type' ở đây, trình duyệt sẽ tự làm
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("✅ Tải ảnh đại diện thành công!");
+        // Cập nhật state của form
+        setForm(prev => ({ ...prev, avatar_url: data.avatar_url }));
+        // Cập nhật AuthContext
+        login({ ...user, avatar_url: data.avatar_url }, token);
+      } else {
+        throw new Error(data.error || "Tải ảnh thất bại");
+      }
+    } catch (err) {
+      alert("❌ Lỗi: " + err.message);
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // 5. (MỚI) Hàm kích hoạt input file
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
   };
 
   if (loading)
@@ -93,6 +145,15 @@ export default function Setting() {
           <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 uppercase tracking-wide">
             Profile Settings
           </h2>
+          
+          {/* (MỚI) Input file bị ẩn */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+            accept="image/png, image/jpeg, image/gif"
+          />
 
           {/* Avatar & Display Name */}
           <div className="flex flex-col items-center mb-10">
@@ -101,17 +162,23 @@ export default function Setting() {
                 <img src={form.avatar_url} alt="avatar" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-gray-600 text-2xl font-semibold">
-                  {form.display_name?.[0]?.toUpperCase() || "A"}
+                  {form.nickname?.[0]?.toUpperCase() || "A"}
                 </span>
               )}
-              <button className="absolute bottom-0 w-full text-sm bg-blue-500 text-white py-1 rounded-b-xl hover:bg-blue-600">
-                Change Photo
+              
+              {/* (SỬA) Nút "Change Photo" */}
+              <button 
+                onClick={triggerFileInput}
+                className="absolute bottom-0 w-full text-sm bg-blue-500 text-white py-1 hover:bg-blue-600 transition-opacity opacity-70 hover:opacity-100"
+              >
+                Change
               </button>
             </div>
+            
             <input
               type="text"
-              name="display_name"
-              value={form.display_name}
+              name="nickname"
+              value={form.nickname}
               onChange={handleChange}
               placeholder="Display Name"
               className="mt-4 border border-gray-300 rounded-lg p-2 w-64 text-center focus:outline-blue-400"
@@ -125,7 +192,7 @@ export default function Setting() {
               type="email"
               value={form.email}
               readOnly
-              className="border p-2 rounded-lg w-full bg-gray-100 text-gray-600"
+              className="border p-2 rounded-lg w-full bg-gray-100 text-gray-600 cursor-not-allowed"
             />
           </div>
 
@@ -133,7 +200,7 @@ export default function Setting() {
           <div className="flex justify-center gap-4">
             <button
               disabled={saving}
-              onClick={handleSave}
+              onClick={handleSaveNickname} // Chỉ lưu nickname
               className="px-5 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-60"
             >
               {saving ? "Đang lưu..." : "Save Changes"}
@@ -141,7 +208,7 @@ export default function Setting() {
           </div>
         </div>
         <p className="mt-8 text-gray-500 text-sm">
-          © 2025 ComicTranslation. All rights reserved.
+          © 2025 ComicTranslator. All rights reserved.
         </p>
       </main>
     </div>
