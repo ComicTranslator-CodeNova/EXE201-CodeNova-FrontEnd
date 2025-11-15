@@ -42,14 +42,21 @@ export default function Sidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="mt-auto flex flex-col gap-2">
-        <NavLink to="/" className={linkClasses}>
-          ← {t("back")}
+      <div className="mt-auto flex flex-col gap-2 items-stretch">
+        {/* Back to main website */}
+        <NavLink
+          to="/"
+          className={`${linkClasses} w-full text-center bg-black hover:bg-blue-800 text-red-300 px-3 py-2 rounded`}
+        >
+          ← Back to Web Page
         </NavLink>
 
         <button
-          onClick={logout}
-          className="text-left px-3 py-2 rounded hover:bg-blue-800 text-red-300"
+          onClick={() => {
+            logout();
+            navigate("/menu");
+          }}
+          className="w-full px-3 py-2 rounded hover:bg-blue-800 text-red-300 text-center"
         >
           {t("logout")}
         </button>
@@ -62,6 +69,7 @@ export default function Sidebar() {
           {i18n.language === "en" ? "🇺🇸 English" : "🇻🇳 Tiếng Việt"}
         </button>
       </div>
+
 
       <footer className="mt-4 text-xs text-blue-200">
         © 2025 ComicTranslator. {t("rights")}
