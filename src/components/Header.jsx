@@ -30,7 +30,7 @@ export default function Header() {
         <button onClick={() => scrollToSection("how")} className="hover:text-blue-400 transition">
           {t("nav_how")}
         </button>
-        <button onClick={() => scrollToSection("features")} className="hover:text-blue-400 transition">
+         <button onClick={() => scrollToSection("features")} className="hover:text-blue-400 transition">
           {t("nav_features")}
         </button>
         <button onClick={() => scrollToSection("pricing")} className="hover:text-blue-400 transition">
@@ -40,30 +40,34 @@ export default function Header() {
           {t("nav_faq")}
         </button>
         <button onClick={() => scrollToSection("testimonials")} className="hover:text-blue-400 transition">
-          {t("nav_reviews")}
+           {t("nav_reviews")}
         </button>
       </nav>
 
       {/* User info */}
       <div className="flex items-center gap-4">
-        {user ? (
+        {user ?
+(
           <>
-            {/* Nút Admin chỉ hiển thị cho admin */}
-            {user.role === "admin" && (
+            {/* === (PHẦN SỬA LỖI Ở ĐÂY) === */}
+            {/* Logic MỚI: Hoặc Admin, hoặc Menu, không hiển thị cả hai */}
+            {user.role === "admin" ? (
               <button
                 onClick={() => navigate("/admin")}
                 className="bg-yellow-500 text-black px-3 py-1 rounded hover:bg-yellow-400 transition font-semibold"
               >
-                Admin
+                Admin Panel
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/menu")}
+                className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 transition"
+              >
+                {t("nav_menu")}
               </button>
             )}
+            {/* === (KẾT THÚC PHẦN SỬA) === */}
 
-            <button
-              onClick={() => navigate("/menu")}
-              className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 transition"
-            >
-              {t("nav_menu")}
-            </button>
             <span className="text-gray-300">{user.display_name || user.email}</span>
             <button
               onClick={logout}
@@ -75,7 +79,7 @@ export default function Header() {
         ) : (
           <>
             <Link to="/login" className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600 text-white">
-              {t("nav_login")}
+               {t("nav_login")}
             </Link>
             <Link
               to="/register"
@@ -83,7 +87,7 @@ export default function Header() {
             >
               {t("nav_register")}
             </Link>
-          </>
+           </>
         )}
       </div>
     </header>
