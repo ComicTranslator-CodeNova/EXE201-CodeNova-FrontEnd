@@ -19,30 +19,33 @@ export default function Tokens() {
     localStorage.setItem("lang", newLang);
   };
 
-  const plans = [
-    {
-      name: t("plan_free_name"),
-      amount: 50,
-      price: 0,
-      desc: t("plan_free_desc"),
-      features: t("plan_free_features", { returnObjects: true }),
-    },
-    {
-      name: t("plan_standard_name"),
-      amount: 500,
-      price: 260000,
-      desc: t("plan_standard_desc"),
-      features: t("plan_standard_features", { returnObjects: true }),
-      recommended: true,
-    },
-    {
-      name: t("plan_premium_name"),
-      amount: 1200,
-      price: 520000,
-      desc: t("plan_premium_desc"),
-      features: t("plan_premium_features", { returnObjects: true }),
-    },
-  ];
+const plans = [
+  {
+    id: "459C150B-FDDC-4113-BB47-7BDC8C78F824",     // FREE
+    name: t("plan_free_name"),
+    amount: 0,
+    price: 0,
+    desc: t("plan_free_desc"),
+    features: t("plan_free_features", { returnObjects: true }),
+  },
+  {
+    id: "D3264CD2-47AF-447A-AAC4-2AFA74EB7B1C",     // STANDARD 260K
+    name: t("plan_standard_name"),
+    amount: 0,
+    price: 260000,
+    desc: t("plan_standard_desc"),
+    features: t("plan_standard_features", { returnObjects: true }),
+    recommended: true,
+  },
+  {
+    id: "38245E48-73F8-4752-8A2D-68C349C43096",     // PREMIUM 520K
+    name: t("plan_premium_name"),
+    amount: 0,
+    price: 520000,
+    desc: t("plan_premium_desc"),
+    features: t("plan_premium_features", { returnObjects: true }),
+  }
+];
 
   const handleSelect = (plan) => {
     setSelected(plan);
@@ -51,11 +54,25 @@ export default function Tokens() {
 
   const handleContinue = () => {
     if (!selected) return;
+
+    // Nếu là FREE → không qua payment
+    if (selected.price === 0) {
+      alert("Bạn đã đăng ký gói Free thành công!");
+      setShowPopup(false);
+      return; // Không navigate nữa
+    }
+
+    // Có tính phí → chuyển sang Payment
     setShowPopup(false);
     navigate("/payment", {
-      state: { packageId: selected.amount, price: selected.price },
+      state: {
+        planId: selected.id,
+        name: selected.name,
+        price: selected.price,
+      },
     });
   };
+
 
   const handleCancel = () => {
     setShowPopup(false);
